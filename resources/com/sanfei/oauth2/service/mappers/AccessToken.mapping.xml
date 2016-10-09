@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AccessToken">
+
+	<!-- PROPERTY INSERT -->
+	<insert id="insertAccessToken" parameterType="com.sanfei.oauth2.service.AccessToken">
+		insert into access_token (
+		id,
+		access_token,
+		token_type,
+		expires,
+		refresh_token,
+		username,
+		client_id,
+		createdtime,
+		modifiedtime
+		)
+		values (
+		#{id},
+		#{access_token},
+		#{token_type},
+		#{expires},
+		#{refresh_token},
+		#{username},
+		#{client_id},
+		#{createdtime},
+		#{modifiedtime}
+		)
+	</insert>
+
+	<resultMap id="accesstokenResultMap" type="com.sanfei.oauth2.service.AccessToken">
+		<result property="id" column="id" jdbcType="BIGINT" />
+		<result property="access_token" column="access_token" jdbcType="VARCHAR" />
+		<result property="token_type" column="token_type" jdbcType="VARCHAR" />
+		<result property="expires" column="expires" jdbcType="VARCHAR" />
+		<result property="refresh_token" column="refresh_token" jdbcType="VARCHAR" />
+		<result property="username" column="username" jdbcType="VARCHAR" />
+		<result property="client_id" column="client_id" jdbcType="VARCHAR" />
+		<result property="createdtime" column="createdtime" jdbcType="TIMESTAMP" />
+		<result property="modifiedtime" column="modifiedtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+
+	<select id="getAccessTokenByaccess_token" parameterType="String" resultMap="accesstokenResultMap">
+		SELECT *
+		FROM access_token
+		WHERE access_token=#{access_token}
+	</select>
+
+	<select id="getAccessTokenByrefresh_token" parameterType="String" resultMap="accesstokenResultMap">
+		SELECT *
+		FROM access_token
+		WHERE refresh_token=#{refresh_token}
+	</select>
+
+</mapper>
